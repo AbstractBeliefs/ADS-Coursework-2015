@@ -1,0 +1,9 @@
+# C stuff
+CourseWork1
+*.o
+
+# Report stuff
+*.aux
+*.log
+*.pdf
+*.toc
