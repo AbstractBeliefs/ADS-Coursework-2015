@@ -1,7 +1,8 @@
 CC = clang
 CFLAGS = -std=c11 -Wall
-SOURCES = src/main.c
+SOURCES = src/main.c src/ClarkeWright.c
 EXECUTABLE = CourseWork1
+TESTDATA = data/rand00010prob.csv
 OBJECTS = $(SOURCES:.c=.o)
 
 
@@ -17,8 +18,12 @@ $(EXECUTABLE): $(OBJECTS)
 
 # Run
 run: $(EXECUTABLE)
-	./$(EXECUTABLE)
+	./$(EXECUTABLE) $(TESTDATA)
 
+# Debug
+debug: CFLAGS += -ggdb
+debug: clean $(EXECUTABLE)
+	gdb --args $(EXECUTABLE) $(TESTDATA)
 
 # Report
 # <blank>
@@ -29,4 +34,4 @@ clean:
 	rm -f $(EXECUTABLE) $(OBJECTS)
 
 
-.PHONY: clean test
+.PHONY: clean test debug
