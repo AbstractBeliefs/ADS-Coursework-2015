@@ -21,5 +21,6 @@ typedef struct {
 } depot_t;
 
 int populateCustomers(FILE* problem, depot_t* depot, customer_t** *customers);
+int closeCustomers(customer_t** *customers);
 
 #endif

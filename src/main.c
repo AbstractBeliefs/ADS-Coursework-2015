@@ -4,16 +4,26 @@
 #include "ClarkeWright.h"
 
 int main(int argc, char* argv[]){
+    printf("40099603 Clarke-Wright route optimiser\n");
+
+    printf("Loading depot and customer information from file... ");
     FILE* problem = fopen(argv[argc-1], "r");
     depot_t depot;
     customer_t* *customers;
+    printf("\x1b[32mdone.\x1b[0m\n");
 
+    printf("Parsing CSV and populating entries... ");
     populateCustomers(problem, &depot, &customers);
+    fclose(problem);
+    printf("\x1b[32mdone.\x1b[0m\n");
 
-    printf("The depot at (%3d,%3d) has a truck size %d\n", depot.x, depot.y, depot.trucksize);
-    for (int i = 0; customers[i]; i++){
-        printf("Customer %d at (%3d,%3d) has a load %d\n",
-                i, customers[i]->x, customers[i]->y, customers[i]->load);
-    }
+    printf("Solving... ");
+    //solveClarkeWright();
+    printf("\x1b[32mdone.\x1b[0m\n");
+
+    printf("Deallocating problem... ");
+    closeCustomers(&customers);
+    printf("\x1b[32mdone.\x1b[0m\n");
+
     return 0;
 }

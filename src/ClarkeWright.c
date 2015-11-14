@@ -58,3 +58,13 @@ int populateCustomers(FILE* problem, depot_t* depot, customer_t** *customers){
 
     return 0;
 }
+
+int closeCustomers(customer_t** *customers){
+    for (int i = 0; (*customers)[i]; i++){
+        free((*customers)[i]);
+        (*customers)[i] = NULL;
+    }
+    free(*customers);
+    (*customers) = NULL;
+    return 0;
+}
