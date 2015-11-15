@@ -8,10 +8,12 @@ enum error {
     EFAILEDTOMEMORY
 };
 
-typedef struct {
-    int x;
-    int y;
-    int load;
+typedef struct customer_t {
+    int x;                      // X Coord
+    int y;                      // Y Coord
+    int load;                   // Load to pick up
+    struct customer_t *next;    // Previous link in route. NULL means depot.
+    struct customer_t *prev;    // Next link in route. NULL means depot.
 } customer_t;
  
 typedef struct {

@@ -53,6 +53,8 @@ int populateCustomers(FILE* problem, depot_t* depot, customer_t** *customers){
         (*customers)[j]->x = buffer[0];
         (*customers)[j]->y = buffer[1];
         (*customers)[j]->load = buffer[2];
+        (*customers)[j]->next = NULL;
+        (*customers)[j]->prev = NULL;
         (*customers)[++j] = NULL;  // Sentinel the end of list
     }
 
