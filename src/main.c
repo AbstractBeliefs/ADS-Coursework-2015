@@ -18,7 +18,7 @@ int main(int argc, char* argv[]){
     printf("\x1b[32mdone.\x1b[0m\n");
 
     printf("Solving... ");
-    //solveClarkeWright();
+    customer_t* *routes = solveClarkeWright(depot, customers);
     printf("\x1b[32mdone.\x1b[0m\n");
 
     printf("Deallocating problem... ");

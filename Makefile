@@ -1,5 +1,6 @@
 CC = clang
 CFLAGS = -std=c11 -Wall
+LFLAGS = -lm
 SOURCES = src/main.c src/ClarkeWright.c
 EXECUTABLE = CourseWork1
 TESTDATA = data/rand00010prob.csv
@@ -10,7 +11,7 @@ OBJECTS = $(SOURCES:.c=.o)
 all: $(EXECUTABLE)
 
 $(EXECUTABLE): $(OBJECTS)
-	$(CC) $(CFLAGS) $(OBJECTS) -o $(EXECUTABLE)
+	$(CC) $(CFLAGS) $(LFLAGS) $(OBJECTS) -o $(EXECUTABLE)
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@

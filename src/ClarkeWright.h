@@ -22,7 +22,14 @@ typedef struct {
     int trucksize;
 } depot_t;
 
+typedef struct {
+    customer_t *i;
+    customer_t *j;
+    double saving;
+} saving_t;
+
 int populateCustomers(FILE* problem, depot_t* depot, customer_t** *customers);
 int closeCustomers(customer_t** *customers);
+customer_t** solveClarkeWright(depot_t depot, customer_t** customers);
 
 #endif
