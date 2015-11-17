@@ -88,6 +88,27 @@ double getSavings(customer_t* i, customer_t* j, depot_t depot){
     return c_0i + c_j0 - c_ij;
 }
 
+int customerNotInRoute(customer_t* customer, customer_t* route){
+    for (; route; route = route->next){
+        if (customer == route){ return 0; }
+    }
+    return 1;
+}
+
+unsigned int routeLoad(customer_t* route){
+    // rewind to start of route
+    for (; route->prev; route = route->prev){}
+
+    // Sum the load between the start and end of the route
+    unsigned int total_load = 0;
+
+    do {
+        total_load += route->load;
+    } while ((route = route->next));
+
+    return total_load;
+}
+
 customer_t** solveClarkeWright(depot_t depot, customer_t** customers){
     // Allocate enough for a fully connected graph (n*(n-1)/2) plus sentinel
     size_t num_savings = 0;
@@ -99,6 +120,7 @@ customer_t** solveClarkeWright(depot_t depot, customer_t** customers){
     num_savings = (num_customers * (num_customers-1)) / 2;
     saving_t* savings = malloc(sizeof(saving_t) * num_savings);
 
+    // Calculate the savings for all pairings and sort them best to worst
     size_t idx = 0;
     for (size_t i = 0; customers[i+1]; i++){
         for (size_t j = i+1; customers[j]; j++){
@@ -113,9 +135,42 @@ customer_t** solveClarkeWright(depot_t depot, customer_t** customers){
     }
     SGLIB_ARRAY_SINGLE_QUICK_SORT(saving_t, savings, num_savings, CMP_SAVING);
 
-    for (size_t i = 0; i < num_savings; i++){
-        printf("%2lu: %f\n", i+1, savings[i].saving);
+    // Apply these savings, building routes as we go
+    for (size_t i = 0; i<num_savings; i++){
+        if (
+                (savings[i].i->next == NULL && savings[i].j->prev == NULL) &&
+                (routeLoad(savings[i].i) + routeLoad(savings[i].j) <= depot.trucksize) &&
+                (customerNotInRoute(savings[i].i, savings[i].j))
+                ){
+            savings[i].i->next = savings[i].j;
+            savings[i].j->prev = savings[i].i;
+        } else if (
+                (savings[i].i->prev == NULL && savings[i].j->next == NULL) &&
+                (routeLoad(savings[i].i) + routeLoad(savings[i].j) <= depot.trucksize) &&
+                (customerNotInRoute(savings[i].j, savings[i].i))
+                ){
+            savings[i].i->prev = savings[i].j;
+            savings[i].j->next = savings[i].i;
+        } else {
+            continue;    // route wasn't mergeable in either direction.
+        }
     }
 
-    return NULL;
+    // Build the finalised list of routes
+    size_t num_routes = 0;
+    for (size_t i = 0; customers[i]; i++){
+        if (customers[i]->prev == NULL){
+            num_routes++;
+        }
+    }
+    customer_t* *routes = malloc(sizeof(customer_t*) * (num_routes+1));
+    idx = 0;
+    for (size_t i = 0; customers[i]; i++){
+        if (customers[i]->prev == NULL){
+            routes[idx] = customers[i];
+            routes[++idx] = NULL;
+        }
+    }
+
+    return routes;
 }

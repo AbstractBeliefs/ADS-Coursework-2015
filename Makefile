@@ -24,7 +24,7 @@ run: $(EXECUTABLE)
 # Debug
 debug: CFLAGS += -ggdb
 debug: clean $(EXECUTABLE)
-	gdb --args $(EXECUTABLE) $(TESTDATA)
+	gdb -tui --args $(EXECUTABLE) $(TESTDATA)
 
 # Report
 # <blank>
@@ -35,4 +35,4 @@ clean:
 	rm -f $(EXECUTABLE) $(OBJECTS)
 
 
-.PHONY: clean test debug
+.PHONY: clean run debug
