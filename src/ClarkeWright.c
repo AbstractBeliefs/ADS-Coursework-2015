@@ -75,6 +75,12 @@ int closeCustomers(customer_t** *customers){
     return 0;
 }
 
+int closeRoutes(customer_t** *routes){
+    free(*routes);
+    (*routes) = NULL;
+    return 0;
+}
+
 double getDistance(int x1, int y1, int x2, int y2){
     // Pythagorean distance
     return sqrt(pow(x1-x2, 2) + pow(y1-y2, 2));

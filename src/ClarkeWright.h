@@ -30,6 +30,7 @@ typedef struct {
 
 int populateCustomers(FILE* problem, depot_t* depot, customer_t** *customers);
 int closeCustomers(customer_t** *customers);
+int closeRoutes(customer_t** *routes);
 customer_t** solveClarkeWright(depot_t depot, customer_t** customers);
 
 #endif
