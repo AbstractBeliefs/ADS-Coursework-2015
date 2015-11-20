@@ -5,11 +5,12 @@ SOURCES = src/main.c src/ClarkeWright.c
 EXECUTABLE = CourseWork1
 TESTDATA = data/rand00010prob.csv
 OUTPUT = solution.csv
+REPORT = report.pdf
 OBJECTS = $(SOURCES:.c=.o)
 
 
 # Core library
-all: $(EXECUTABLE)
+all: $(EXECUTABLE) $(REPORT)
 
 $(EXECUTABLE): $(OBJECTS)
 	$(CC) $(CFLAGS) $(LFLAGS) $(OBJECTS) -o $(EXECUTABLE)
@@ -34,12 +35,16 @@ debug: clean $(EXECUTABLE)
 	gdb -tui --args $(EXECUTABLE) $(TESTDATA) $(OUTPUT)
 
 # Report
-# <blank>
+report: $(REPORT)
+$(REPORT): report/report.tex
+	pdflatex report/report.tex
+	pdflatex report/report.tex		# Required to generate ToC
 
 
 # Utility
 clean:
 	rm -f $(EXECUTABLE) $(OBJECTS) $(OUTPUT)
+	rm -f *.aux *.toc *.log *.pdf *.bcf *.xml
 
 
 .PHONY: clean all run debug release
