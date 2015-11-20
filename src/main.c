@@ -21,7 +21,7 @@ int main(int argc, char* argv[]){
     fclose(problem);
     printf("\x1b[32mdone.\x1b[0m\n");
 
-    printf("Solving... ");
+    printf("Solving... "); fflush(stdout);  // Really need this pretty soon.
     struct timespec start, end;
     clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &start);
     customer_t* *routes = solveClarkeWright(depot, customers);
