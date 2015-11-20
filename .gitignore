@@ -9,6 +9,7 @@ CourseWork1
 *.toc
 *.bbl
 *.blg
+*.out
 
 # Editor stuff
 *.swp
