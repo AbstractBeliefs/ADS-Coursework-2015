@@ -42,4 +42,4 @@ clean:
 	rm -f $(EXECUTABLE) $(OBJECTS) $(OUTPUT)
 
 
-.PHONY: clean run debug
+.PHONY: clean all run debug release
