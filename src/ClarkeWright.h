@@ -3,11 +3,6 @@
 
 #include <stdio.h>
 
-enum error {
-    ENOCUSTOMERS = 1,
-    EFAILEDTOMEMORY
-};
-
 typedef struct customer_t {
     int x;                      // X Coord
     int y;                      // Y Coord
