@@ -7,15 +7,21 @@
 \usepackage{xcolor}
 \pagestyle{fancy}
 
-\lhead{Tube Tracker}
-\rhead{CSN08113}
-\lfoot{Final Report}
+\addtolength{\oddsidemargin}{-.875in}
+\addtolength{\evensidemargin}{-.875in}
+\addtolength{\headwidth}{1.75in}
+\addtolength{\textwidth}{1.75in}
+
+\lhead{Clarke-Wright Implementation}
+\rhead{SET09117}
+\lfoot{Report}
 \cfoot{\thepage}
 \rfoot{Gareth Pulham, 40099603}
 
 \lstdefinestyle{customc}{
     belowcaptionskip=1\baselineskip,
     frame=single,
+    breaklines=true,
     xleftmargin=\parindent,
     language=C,
     showstringspaces=false,
@@ -28,11 +34,40 @@
 
 \begin{document}
     \begin{titlepage}
-        \title{Algorithms and Data Structures Coursework: An Implementation in C}
+        \title{Algorithms and Data Structures Coursework: An Implementation of the Clarke-Wright Route Optimisation in C}
         \author{Gareth Pulham, 40099603}
         \date{\today}
         \maketitle
         \thispagestyle{empty}
+        \begin{abstract}
+            As part of Napier University's Algorithms and Data Structures class (SET09117), students were tasked to implement and report upon an implementation
+            of the Clarke-Wright \cite{CW} route optimisation algorithm. This document will cover one such implementation by student 40099603, covering design,
+            implementation, and testing of the solver.
+        \end{abstract}
     \end{titlepage}
-\end{document}
 
+    \tableofcontents
+
+    \section{Introduction}
+    blah blah blah
+
+    \section{Method}
+    blah blah blah
+
+    \section{Results}
+    blah blah blah
+
+    \section{Conclusion}
+    blah blah blah
+
+    \section{Appendices}
+        \subsection{Source code listings}
+            \subsubsection{main.c}
+                \lstinputlisting[style=customc]{../src/main.c}
+            \subsubsection{ClarkeWright.h}
+                \lstinputlisting[style=customc]{../src/ClarkeWright.h}
+            \subsubsection{ClarkeWright.c}
+                \lstinputlisting[style=customc]{../src/ClarkeWright.c}
+    \bibliographystyle{abbrv}
+    \bibliography{report}
+\end{document}

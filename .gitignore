@@ -7,6 +7,8 @@ CourseWork1
 *.log
 *.pdf
 *.toc
+*.bbl
+*.blg
 
 # Editor stuff
 *.swp

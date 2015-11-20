@@ -36,15 +36,18 @@ debug: clean $(EXECUTABLE)
 
 # Report
 report: $(REPORT)
-$(REPORT): report/report.tex
-	pdflatex report/report.tex
-	pdflatex report/report.tex		# Required to generate ToC
+$(REPORT): report/report.tex report/report.bib
+	cd report && \
+	pdflatex report.tex && \
+	bibtex report && \
+	pdflatex report.tex && \
+	pdflatex report.tex		# Required to generate ToC
 
 
 # Utility
 clean:
 	rm -f $(EXECUTABLE) $(OBJECTS) $(OUTPUT)
-	rm -f *.aux *.toc *.log *.pdf *.bcf *.xml
+	rm -f report/*.aux report/*.toc report/*.log report/*.pdf report/*.bcf report/*.xml report/*.bbl report/*.blg
 
 
 .PHONY: clean all run debug release
