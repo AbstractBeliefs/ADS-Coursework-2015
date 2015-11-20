@@ -4,6 +4,7 @@ LFLAGS = -lm
 SOURCES = src/main.c src/ClarkeWright.c
 EXECUTABLE = CourseWork1
 TESTDATA = data/rand00010prob.csv
+OUTPUT = solution.csv
 OBJECTS = $(SOURCES:.c=.o)
 
 
@@ -19,12 +20,17 @@ $(EXECUTABLE): $(OBJECTS)
 
 # Run
 run: $(EXECUTABLE)
-	./$(EXECUTABLE) $(TESTDATA)
+	./$(EXECUTABLE) $(TESTDATA) $(OUTPUT)
+
+# Release (aka SANIC MODE)
+release: CFLAGS += -O3 -DFAST
+release: clean $(EXECUTABLE)
+	time ./$(EXECUTABLE) $(TESTDATA) $(OUTPUT)
 
 # Debug
 debug: CFLAGS += -ggdb
 debug: clean $(EXECUTABLE)
-	gdb -tui --args $(EXECUTABLE) $(TESTDATA)
+	gdb -tui --args $(EXECUTABLE) $(TESTDATA) $(OUTPUT)
 
 # Report
 # <blank>
@@ -32,7 +38,7 @@ debug: clean $(EXECUTABLE)
 
 # Utility
 clean:
-	rm -f $(EXECUTABLE) $(OBJECTS)
+	rm -f $(EXECUTABLE) $(OBJECTS) $(OUTPUT)
 
 
 .PHONY: clean run debug
