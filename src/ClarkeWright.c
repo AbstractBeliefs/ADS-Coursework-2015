@@ -118,53 +118,6 @@ unsigned int routeLoad(customer_cwt* route){
 }
 
 customer_cwt** solveClarkeWright(depot_cwt depot, customer_cwt** customers){
-    // Allocate enough for a fully connected graph (n*(n-1)/2)
-    size_t num_savings = 0;
-    size_t num_customers = 0;
-    for (size_t i = 0; customers[i]; i++){
-        num_customers++;
-    }
-
-    num_savings = (num_customers * (num_customers-1)) / 2;
-    saving_cwt* savings = malloc(sizeof(saving_cwt) * num_savings);
-
-    // Calculate the savings for all pairings and sort them best to worst
-    size_t idx = 0;
-    for (size_t i = 0; customers[i+1]; i++){
-        for (size_t j = i+1; customers[j]; j++){
-            savings[idx].i = customers[i];
-            savings[idx].j = customers[j];
-            savings[idx++].saving = getSavings(
-                customers[i],
-                customers[j],
-                depot
-            );
-        }
-    }
-    SGLIB_ARRAY_SINGLE_QUICK_SORT(saving_cwt, savings, num_savings, CMP_SAVING);
-
-    // Apply these savings, building routes as we go
-    for (size_t i = 0; i<num_savings; i++){
-        if (    // Merge it i->j
-                (savings[i].i->next == NULL && savings[i].j->prev == NULL) &&
-                (routeLoad(savings[i].i) + routeLoad(savings[i].j) <= depot.trucksize) &&
-                (customerNotInRoute(savings[i].i, savings[i].j))
-                ){
-            savings[i].i->next = savings[i].j;
-            savings[i].j->prev = savings[i].i;
-        } else if (
-                // Merge it j->i
-                (savings[i].i->prev == NULL && savings[i].j->next == NULL) &&
-                (routeLoad(savings[i].i) + routeLoad(savings[i].j) <= depot.trucksize) &&
-                (customerNotInRoute(savings[i].j, savings[i].i))
-                ){
-            savings[i].i->prev = savings[i].j;
-            savings[i].j->next = savings[i].i;
-        } else {
-            continue;    // route wasn't mergeable in either direction.
-        }
-    }
-
     // Build the finalised list of routes
     size_t num_routes = 0;
     for (size_t i = 0; customers[i]; i++){
@@ -173,7 +126,7 @@ customer_cwt** solveClarkeWright(depot_cwt depot, customer_cwt** customers){
         }
     }
     customer_cwt* *routes = malloc(sizeof(customer_cwt*) * (num_routes+1));
-    idx = 0;
+    size_t idx = 0;
     for (size_t i = 0; customers[i]; i++){
         if (customers[i]->prev == NULL){
             routes[idx] = customers[i];
