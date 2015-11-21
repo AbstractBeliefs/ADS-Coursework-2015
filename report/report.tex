@@ -2,6 +2,8 @@
 
 \usepackage{listings}
 \usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
 \usepackage{fancyhdr}
 \usepackage{color}
 \usepackage{xcolor}
@@ -63,6 +65,18 @@
     Lysgaard \cite{Lysgaard} in ``Clarke and Wright's Savings Algorithm''. Once all these merge savings have been ranked, they are applied where possible. 
     Thanks to the ranking, the biggest saving route merges have the highest likelyhood of being applicable.
 
+    In this case, the implementation of the algorithm was completed in C, and as will be shown to have the strengths and weaknesses that this language tends towards.
+    Notably, the solution is very fast in comparison to most comparable implementations in other languages, such as Java and Python, as memory management is
+    manually and carefully considered, as well as being able to take advantage of C's fast native maths support.
+    Some limitations include:
+    \begin{itemize}
+        \item All coordinates (both customer and depot) must be within the range of the platforms \texttt{int} type
+        \item All customer loads and depot truck sizes must be within the range of the platforms \texttt{int} type
+        \item Performance is highly dependent on memory management speeds and pointer comparison speeds
+    \end{itemize}
+    Many of the limitations are tunable, for example, larger coordinate ranges can be permitted by adjusting the types used in \texttt{ClarkeWright.h} and
+    \texttt{ClarkeWright.c}.
+
     \section{Method}
     As part of the algorithm implementation, the developer was mindful of the following test points:
     \begin{itemize}
@@ -78,7 +92,8 @@
 
         \subsection{Speed and efficiency}
         The use of the algorithm in the test code was instrumented to measure the CPU time consumed between starting and finishing the algorithm,
-        and the number of milliseconds consumed is printed during runtime.
+        and the number of milliseconds consumed is printed during runtime. The algorithm was run multiple times over each test data instance, including
+        cache warming pre-runs, and their run times recorded. From these records, we can calculate the average runtime.
 
         \subsection{Relative improvement}
         A stub version of the algorithm was also executed that produced naive 1-route-per-customer routes. These routes were also tested by \texttt{Verify.jar}
@@ -86,7 +101,118 @@
     
 
     \section{Results}
-    blah blah blah
+        \subsection{Correctness}
+        For this algorithm, the primary correctness requirements were that all customers \emph{must} be delivered to and that all routes \emph{must} have a lower
+        total load than the delivery vehicles capacity. Failure to adhere to these requirements in every route would be considered a failed implementation, as it
+        does not correctly solve the problem. To test this, \texttt{Verify.jar} should be called with the problem CSV and the possible solution CSV
+        as arguments. The output will be either a pass or fail, and in each case more information is produced such as the total cost of a valid solution, or the
+        missing customers or overloaded route if the solution was invalid.
+
+        \begin{figure}[h]
+            \centering
+            \begin{subfigure}{.5\textwidth}
+                \centering
+                \includegraphics[width=.4\linewidth]{images/40-customers-blank.png}
+                \caption{SVG file produced for an unrouted problem}
+                \label{fig:sub1}
+            \end{subfigure}%
+            \begin{subfigure}{.5\textwidth}
+                \centering
+                \includegraphics[width=.4\linewidth]{images/40-customers-routed.png}
+                \caption{SVG file produced for a routed problem}
+                \label{fig:sub1}
+            \end{subfigure}
+            \caption{\texttt{Verify.jar} SVG outputs showing unrouted problem and valid routed solution}
+            \label{fig:correctness}
+        \end{figure}
+        
+        \texttt{Verify.jar} shown that for all test problems, valid solutions were produced. While this does not prove the algorithms implementation correct,
+        for the purposes of this work, these outputs satisfy our test for correctness.
+        
+        \subsection{Speed and efficiency}
+        An additional area of investigation is the speed and efficiency of the algorithm. The test code in \texttt{main.c} that calls the implementation also
+        records the CPU time consumed by the algorithm for reporting after the solution is calculated. The results are shown below.
+        % Put the graph in here
+        
+        \begin{minipage}{\textwidth}
+            \centering
+            \begin{tabular}{ c c }
+                Number of customers & Average runtime (milliseconds) \\
+                \hline
+                \hline
+                10                  &  0.00569 \\
+                20                  &  0.02419 \\
+                30                  &  0.05222 \\
+                40                  &  0.10364 \\
+                50                  &  0.17757 \\
+                60                  &  0.18564 \\
+                70                  &  0.28376 \\
+                80                  &  0.41329 \\
+                90                  &  0.45694 \\
+                100                 &  0.65025 \\
+                200                 &  2.74443 \\
+                300                 &  6.21002 \\
+                400                 &  8.22210 \\
+                500                 & 14.17183 \\
+                600                 & 22.50074 \\
+                700                 & 29.85135 \\
+                800                 & 38.22703 \\
+                900                 & 48.18592 \\
+                1000                & 62.10673 \\
+                \hline
+            \end{tabular}
+        \end{minipage}
+        
+        \subsection{Relative improvement}
+        The purpose of the algorithm is to provide efficient routes. In this test, we compare the cost of our implementation vs. the cost of a naive
+        1-route-per-customer solution.
+        
+        \begin{figure}[h]
+            \centering
+            \begin{subfigure}{.5\textwidth}
+                \centering
+                \includegraphics[width=.4\linewidth]{images/10-customers-naive.png}
+                \caption{SVG file produced for a naive solution}
+                \label{fig:sub1}
+            \end{subfigure}%
+            \begin{subfigure}{.5\textwidth}
+                \centering
+                \includegraphics[width=.4\linewidth]{images/10-customers-routed.png}
+                \caption{SVG file produced for a solution by our implementation of C\&W}
+                \label{fig:sub1}
+            \end{subfigure}
+            \caption{\texttt{Verify.jar} SVG outputs showing solutions from naive and our implementation of C\&W}
+            \label{fig:speedandefficiency}
+        \end{figure}
+        
+        \begin{minipage}{\textwidth}
+            \centering
+            \begin{tabular}{ c c c c }
+                Number of customers & Cost (naive) & Cost (C\&W) & Improvement (\%) \\
+                \hline
+                \hline
+                10                  &   3781       &  1471       & 156 \\
+                20                  &   7930       &  2374       & 233 \\
+                30                  &  10302       &  3251       & 216 \\
+                40                  &  15775       &  3393       & 364 \\
+                50                  &  20072       &  4687       & 328 \\
+                60                  &  23193       &  5063       & 358 \\
+                70                  &  25924       &  5049       & 413 \\
+                80                  &  28756       &  6218       & 362 \\
+                90                  &  34580       &  6909       & 400 \\
+                100                 &  38703       &  7529       & 414 \\
+                200                 &  76928       & 12968       & 493 \\
+                300                 & 116480       & 16958       & 586 \\
+                400                 & 153608       & 22644       & 578 \\
+                500                 & 188739       & 27996       & 574 \\
+                600                 & 228961       & 33416       & 585 \\
+                700                 & 266674       & 37265       & 615 \\
+                800                 & 311675       & 42246       & 637 \\
+                900                 & 347699       & 48802       & 612 \\
+                1000                & 390783       & 51398       & 660 \\
+                \hline
+            \end{tabular}
+        \end{minipage}
 
     \section{Conclusion}
     blah blah blah
@@ -95,6 +221,7 @@
     \bibliography{report}
     
     \section{Appendices}
+        \subsection{Full table of results for speed and efficiency testing}
         \subsection{Source code listings}
             This section contains the listings for functional code in this implementation of the Clarke-Wright algorithm.
             Complete versions of the entire project, including test data, build files, and the source for this report will be available from
