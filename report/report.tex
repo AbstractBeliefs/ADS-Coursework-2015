@@ -132,7 +132,12 @@
         \subsection{Speed and efficiency}
         An additional area of investigation is the speed and efficiency of the algorithm. The test code in \texttt{main.c} that calls the implementation also
         records the CPU time consumed by the algorithm for reporting after the solution is calculated. The results are shown below.
-        % Put the graph in here
+        
+        \begin{figure}[!h]
+            \centering
+            \includegraphics[width=\textwidth]{images/runtime.png}
+            \caption{Runtime}
+        \end{figure}
         
         \begin{minipage}{\textwidth}
             \centering
@@ -185,6 +190,12 @@
             \label{fig:speedandefficiency}
         \end{figure}
         
+        \begin{figure}[!h]
+            \centering
+            \includegraphics[width=\textwidth]{images/relimprov.png}
+            \caption{Relative Improvement}
+        \end{figure}
+        
         \begin{minipage}{\textwidth}
             \centering
             \begin{tabular}{ c c c c }
@@ -231,6 +242,35 @@
     
     \section{Appendices}
         \subsection{Full table of results for speed and efficiency testing}
+        \begin{minipage}{\textwidth}
+            \centering
+            \begin{tabular}{ c c c c c c c c c c c }
+                \# customers & Run 1  & Run 2 & Run 3 & Run 4 & Run 5 & Run 6 & Run 7 & Run 8 & Run 9 & Run 10 \\
+                \hline
+                \hline
+                10   & 0.004   & 0.0035        & 0.0035        & 0.0082        & 0.0074        & 0.0079        & 0.0079        & 0.0077        & 0.0034        & 0.0034    \\
+                20   & 0.0331  & 0.0329        & 0.033         & 0.0401        & 0.032         & 0.0141        & 0.0139        & 0.0136        & 0.0149        & 0.0143    \\
+                30   & 0.077   & 0.0758        & 0.0753        & 0.0997        & 0.0333        & 0.0331        & 0.0326        & 0.032         & 0.0317        & 0.0317    \\
+                40   & 0.1338  & 0.1471        & 0.1273        & 0.1253        & 0.126         & 0.1464        & 0.0576        & 0.0575        & 0.0584        & 0.057     \\
+                50   & 0.2191  & 0.2135        & 0.2101        & 0.2081        & 0.218         & 0.2121        & 0.21          & 0.096         & 0.0955        & 0.0933    \\
+                60   & 0.3143  & 0.3094        & 0.3003        & 0.1327        & 0.1349        & 0.1325        & 0.1335        & 0.1327        & 0.1336        & 0.1325    \\
+                70   & 0.4341  & 0.451         & 0.4508        & 0.315         & 0.2038        & 0.189         & 0.1877        & 0.231         & 0.1877        & 0.1875    \\
+                80   & 0.5858  & 0.577         & 0.5938        & 0.5739        & 0.5581        & 0.2482        & 0.2485        & 0.2495        & 0.246         & 0.2521    \\
+                90   & 0.7444  & 0.7488        & 0.7185        & 0.3348        & 0.3364        & 0.3294        & 0.3335        & 0.3325        & 0.3333        & 0.3578    \\
+                100  & 0.9704  & 0.9387        & 0.9572        & 0.4206        & 0.4074        & 0.613         & 0.6067        & 0.6425        & 0.5375        & 0.4085    \\
+                200  & 4.6321  & 4.1302        & 1.8478        & 3.8417        & 3.8964        & 1.8756        & 1.8056        & 1.812         & 1.813         & 1.7899    \\
+                300  & 8.4206  & 4.2655        & 4.2031        & 7.7531        & 8.1938        & 8.4397        & 7.9633        & 4.31          & 4.3087        & 4.2424    \\
+                400  & 11.1098 & 7.9182        & 7.909         & 7.9623        & 7.9015        & 7.908         & 7.8849        & 7.8703        & 7.829         & 7.928     \\
+                500  & 16.7064 & 12.4778       & 12.6246       & 12.5469       & 15.5704       & 17.0121       & 17.2666       & 12.511        & 12.4744       & 12.5281   \\
+                600  & 19.0588 & 24.7346       & 18.9185       & 18.9637       & 28.8652       & 23.8028       & 18.8971       & 25.4448       & 22.6619       & 23.66     \\
+                700  & 26.1584 & 26.2511       & 28.8385       & 33.3771       & 30.2056       & 33.2772       & 30.6929       & 26.1949       & 29.8648       & 33.653    \\
+                800  & 35.2378 & 40.9028       & 35.1573       & 35.1717       & 35.5319       & 35.0931       & 42.8932       & 39.1236       & 42.3332       & 40.8257   \\
+                900  & 48.8103 & 45.2163       & 45.1677       & 45.1228       & 49.1572       & 45.048        & 46.0074       & 48.675        & 52.1607       & 56.4938   \\
+                1000 & 65.1365 & 65.1254       & 58.2802       & 58.1915       & 67.2637       & 61.5851       & 67.728        & 57.4792       & 57.6098       & 62.6679   \\
+                \hline
+            \end{tabular}
+        \end{minipage}
+
         \subsection{Source code listings}
             This section contains the listings for functional code in this implementation of the Clarke-Wright algorithm.
             Complete versions of the entire project, including test data, build files, and the source for this report will be available from
