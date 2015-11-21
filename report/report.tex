@@ -5,6 +5,7 @@
 \usepackage{fancyhdr}
 \usepackage{color}
 \usepackage{xcolor}
+\usepackage[hidelinks]{hyperref}
 \pagestyle{fancy}
 
 \addtolength{\oddsidemargin}{-.875in}
@@ -41,8 +42,8 @@
         \thispagestyle{empty}
         \begin{abstract}
             As part of Napier University's Algorithms and Data Structures class (SET09117), students were tasked to implement and report upon an implementation
-            of the Clarke-Wright \cite{CW} route optimisation algorithm. This document will cover one such implementation by student 40099603, covering design,
-            implementation, and testing of the solver.
+            of the Clarke-Wright \cite{CW} route optimisation algorithm. This document will cover one such implementation by student 40099603, covering how it was
+            tested and how it performs in comparison to naive 1-route-per-customer routes.
         \end{abstract}
     \end{titlepage}
 
@@ -62,6 +63,9 @@
 
     \section{Appendices}
         \subsection{Source code listings}
+            This section contains the listings for functional code in this implementation of the Clarke-Wright algorithm.
+            Complete versions of the entire project, including test data, build files, and the source for this report will be available from
+            \url{https://github.com/AbstractBeliefs/ADS-Coursework-2015/} after the submission deadline (Saturday 21st November 2015, 23:55).
             \subsubsection{main.c}
                 \lstinputlisting[style=customc]{../src/main.c}
             \subsubsection{ClarkeWright.h}

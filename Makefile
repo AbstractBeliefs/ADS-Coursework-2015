@@ -47,7 +47,7 @@ $(REPORT): report/report.tex report/report.bib
 # Utility
 clean:
 	rm -f $(EXECUTABLE) $(OBJECTS) $(OUTPUT)
-	rm -f report/*.aux report/*.toc report/*.log report/*.pdf report/*.bcf report/*.xml report/*.bbl report/*.blg
+	rm -f report/*.aux report/*.toc report/*.log report/*.pdf report/*.bcf report/*.xml report/*.bbl report/*.blg report/*.out
 
 
 .PHONY: clean all run debug release
