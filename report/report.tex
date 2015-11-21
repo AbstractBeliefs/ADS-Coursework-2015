@@ -50,10 +50,40 @@
     \tableofcontents
 
     \section{Introduction}
-    blah blah blah
+    Vehicle routing is a classic algorithmic challenge, with a long history both theoretical and practical in nature.
+    Identifying optimal routes has serious implications to the cost of business operations, and as such has been widely researched by delivery companies,
+    such as UPS, Fedex, and others, because of this.
+    In computer science, the best known form is the Travelling Salesman Problem, to which references date back at least as far as 1832. Computer science
+    research into this field is particularly common in undergraduate studies as it offers a hands-on introduction to graph theory.
+
+    One instance of research into the Vehicle Routing Problem field is the 1964 paper ``Scheduling of Vehicles from a Central Depot to a Number of Delivery Points''
+    by Clarke and Wright \cite{CW}, which puts forward the so called ``Savings Method''. In this method, all delivery points are given a designated route of their
+    own, the highest cost scenario for a multi-route delivery operation. Following this, all possible permutations of route merges are calculated and ranked
+    biggest saving to worst. Given two delivery points $i$ and $j$, the saving that can be made is $ S_{ij} = c_{j0} + c_{0i} - c_{ij} $, as derived by
+    Lysgaard \cite{Lysgaard} in ``Clarke and Wright's Savings Algorithm''. Once all these merge savings have been ranked, they are applied where possible. 
+    Thanks to the ranking, the biggest saving route merges have the highest likelyhood of being applicable.
 
     \section{Method}
-    blah blah blah
+    As part of the algorithm implementation, the developer was mindful of the following test points:
+    \begin{itemize}
+        \item Correctness - the generated routes should cover all customers, and never exceed additional constraints such as delivery vehicle size.
+        \item Speed and efficiency - the algorithm should run quickly and scale well with input size.
+        \item Relative improvement - that is, the level of improvement over naive 1-route-per-customer routes.
+    \end{itemize}
+    These points were all tested in an automated and repeatable fashion across a wide dataset, ranging from 10 to 1000 customers.
+
+        \subsection{Correctness}
+        As part of the work, a tool, \texttt{Verify.jar} was provided that ensured that all customers in a given CSV file had been serviced, and that no
+        routes generated ever exceeded the additional restraints. This tool additionally calculated the cost of the routes produced.
+
+        \subsection{Speed and efficiency}
+        The use of the algorithm in the test code was instrumented to measure the CPU time consumed between starting and finishing the algorithm,
+        and the number of milliseconds consumed is printed during runtime.
+
+        \subsection{Relative improvement}
+        A stub version of the algorithm was also executed that produced naive 1-route-per-customer routes. These routes were also tested by \texttt{Verify.jar}
+        and their costs recorded for comparison with the complete algorithm.
+    
 
     \section{Results}
     blah blah blah
@@ -61,6 +91,9 @@
     \section{Conclusion}
     blah blah blah
 
+    \bibliographystyle{abbrv}
+    \bibliography{report}
+    
     \section{Appendices}
         \subsection{Source code listings}
             This section contains the listings for functional code in this implementation of the Clarke-Wright algorithm.
@@ -72,6 +105,4 @@
                 \lstinputlisting[style=customc]{../src/ClarkeWright.h}
             \subsubsection{ClarkeWright.c}
                 \lstinputlisting[style=customc]{../src/ClarkeWright.c}
-    \bibliographystyle{abbrv}
-    \bibliography{report}
 \end{document}
